@@ -8,8 +8,9 @@ import java.util.Date;
 
 @Service
 public class JwtService {
-    // Clave secreta generada automáticamente para firmar los tokens de forma segura
-    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // Clave secreta fija para compartir con los otros microservicios
+    private static final String SECRET_KEY_STRING = "MiClaveSecretaSuperSeguraParaHotel1234567890";
+    private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET_KEY_STRING.getBytes());
 
     // Tiempo de expiración del token: 1 hora (3600000 milisegundos)
     private static final long EXPIRATION_TIME = 3600000;
