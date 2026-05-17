@@ -10,14 +10,14 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    // 1. Contraseña fija y larga (mínimo 32 caracteres para seguridad HS256)
+    // 1. Contraseña fija y larga (minimo 32 caracteres para seguridad HS256)
     private static final String SECRET = "hotel-microservicios-secret-key-2026-segura";
 
     // 2. Clave generada a partir de la contraseña fija (Ya no es aleatoria)
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
-    // Tiempo de expiración del token: 1 hora (3600000 milisegundos)
-    private static final long EXPIRATION_TIME = 3600000;
+    // Tiempo de expiración del token: 6 meses (15552000000 milisegundos)
+    private static final long EXPIRATION_TIME = 1000L * 60 * 60 * 24 * 180;
 
     public String generarToken(String username, String role) {
         return Jwts.builder()
