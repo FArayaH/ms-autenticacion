@@ -6,16 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+
 import java.util.Map;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/autenticacion")
+@Tag(name = "Autenticación", description = "Endpoints para el inicio de sesión y generación de tokens de seguridad (JWT)")
 public class AutenticacionController {
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
     private JwtService jwtService;
+
+    // --- ANOTACIONES SWAGGER ---
+    @Operation(summary = "Iniciar sesión", description = "Recibe username y password. Valida contra la base de datos y, si es correcto, devuelve un Token JWT firmado.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login exitoso, devuelve el Token JWT"),
+            @ApiResponse(responseCode = "401", description = "No autorizado (Credenciales inválidas)")
+    })
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
